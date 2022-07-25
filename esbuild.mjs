@@ -1,8 +1,7 @@
 //@ts-check
 import { build } from "esbuild";
 import * as path from "node:path";
-import { writeFile, rm, access, mkdir, stat } from "node:fs/promises";
-import { constants } from "node:fs";
+import { writeFile, mkdir } from "node:fs/promises";
 
 const cyan = (/** @type {string} */ text) => `\u001B[${36}m${text}\u001B[${39}m`;
 
@@ -20,7 +19,7 @@ const extensionTransformerPlugin = {
 			build.initialOptions.outExtension?.[".js"] === ".mjs"
 		) {
 			build.onEnd(async (res) => {
-        if (!build.initialOptions.outdir) throw "options.outdir is required"
+				if (!build.initialOptions.outdir) throw "options.outdir is required";
 
 				Promise.all(
 					(res.outputFiles ?? []).map(async ({ path: filePath, text }) => {
@@ -28,14 +27,12 @@ const extensionTransformerPlugin = {
 							/from "\.\/(?<filename>.+)"/g,
 							(_, filename) => `from "./${filename}.mjs"`
 						);
-            
-            try {
-              await mkdir(path.join(filePath, "../"), {
-                recursive: true
-              })
-            } catch {
-              
-            }
+
+						try {
+							await mkdir(path.join(filePath, "../"), {
+								recursive: true,
+							});
+						} catch {}
 
 						writeFile(filePath, contents);
 					})
@@ -63,12 +60,12 @@ const buildConfig = {
 
 /** @type {(Partial<Omit<import("esbuild").BuildOptions, "entryPoints">> & { entryPoints?: string[]; name: string})[]} */
 const builds = [
-  {
-    name: "commonjs build",
+	{
+		name: "commonjs build",
 		format: "cjs",
 	},
 	{
-    plugins: [extensionTransformerPlugin],
+		plugins: [extensionTransformerPlugin],
 		name: "esm build",
 		outExtension: { ".js": ".mjs" },
 		splitting: true,

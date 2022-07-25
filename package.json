@@ -4,8 +4,14 @@
   "description": "tRPC Remix lib",
   "author": "ggrandi",
   "license": "MIT",
+  "homepage": "https://github.com/ggrandi/trpc-remix",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ggrandi/trpc-remix.git"
+  },
   "scripts": {
-    "build": "rm -rf dist/ && pnpm tsc && pnpm node ./esbuild.mjs"
+    "build": "rm -rf dist/ && pnpm tsc && pnpm node ./esbuild.mjs",
+    "prepublish": "pnpm build"
   },
   "main": "dist/index.js",
   "module": "dist/index.mjs",

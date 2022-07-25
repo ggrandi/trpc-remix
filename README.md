@@ -1,23 +1,6 @@
-<p align="center">
-  <a href="https://trpc.io/"><img src="../../www/static/img/logo-text.svg" alt="tRPC" height="130"/></a>
-</p>
+# `trpc-remix`
 
-<p align="center">
-  <strong>End-to-end typesafe APIs made easy</strong>
-</p>
-
-<p align="center">
-  <!-- TODO: replace with new version GIF -->
-  <img src="https://storage.googleapis.com/trpc/trpcgif.gif" alt="Demo" />
-</p>
-
-# `@trpc/remix`
-
-> Connect a tRPC router to remix.
-
-## Documentation
-
-Full documentation for `@trpc/remix` can be found [here]()
+> Connect a [tRPC](https://trpc.io) router to remix.
 
 ## Installation
 
@@ -37,7 +20,7 @@ pnpm add @trpc/remix @trpc/react react-query
 Setup the API route in `app/routes/api/$trpc.ts`
 
 ```ts
-import { remixHTTPRequestHandler } from '@trpc/server/adapters/remix';
+import { remixHTTPRequestHandler } from 'trpc-remix/adapter';
 import { createContext } from '~/server/context';
 import { appRouter } from '~/server/routers/_app';
 
@@ -47,12 +30,11 @@ export const { loader, action } = remixHTTPRequestHandler({
 });
 ```
 
-Setup tRPC in `utils/trpc.ts`.
+Setup tRPC in `app/utils/trpc.ts`.
 
 ```ts
 import { setupTRPC } from '@trpc/remix';
-// Import the router type from your server file
-import type { AppRouter } from '../pages/api/[trpc].ts';
+import type { AppRouter } from '<server file location>';
 
 export const trpc = setupTRPC<AppRouter>({
   config() {
@@ -63,7 +45,7 @@ export const trpc = setupTRPC<AppRouter>({
 });
 ```
 
-Hook up tRPC inside `root.tsx`.
+Hook up tRPC inside `app/root.tsx`.
 
 ```ts
 import { trpc } from '~/utils/trpc';
@@ -82,7 +64,7 @@ export default trpc.withTRPC(App);
 Add createTRPCLoader to your AppRouter file.
 
 ```ts
-import { createTRPCLoader } from '@trpc/remix';
+import { createTRPCLoader } from 'trpc-remix';
 import { t } from '../trpc';
 
 export const appRouter = t.router({
