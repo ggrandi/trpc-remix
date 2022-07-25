@@ -30,7 +30,8 @@
   },
   "files": [
     "README.md",
-    "dist"
+    "dist",
+    "adapter"
   ],
   "peerDependencies": {
     "@remix-run/node": "*",
