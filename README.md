@@ -6,13 +6,13 @@
 
 ```bash
 # npm
-npm install @trpc/remix @trpc/react react-query
+npm install trpc-remix @trpc/react react-query
 
 # Yarn
-yarn add @trpc/remix @trpc/react react-query
+yarn add trpc-remix @trpc/react react-query
 
 # pnpm
-pnpm add @trpc/remix @trpc/react react-query
+pnpm add trpc-remix @trpc/react react-query
 ```
 
 ## Basic Example
@@ -33,10 +33,10 @@ export const { loader, action } = remixHTTPRequestHandler({
 Setup tRPC in `app/utils/trpc.ts`.
 
 ```ts
-import { setupTRPC } from '@trpc/remix';
+import { createTRPCRemix } from 'trpc-remix';
 import type { AppRouter } from '<server file location>';
 
-export const trpc = setupTRPC<AppRouter>({
+export const trpc = createTRPCRemix<AppRouter>({
   config() {
     return {
       // ...
